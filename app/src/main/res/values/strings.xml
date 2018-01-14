@@ -13,4 +13,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="subscription_key">8b8088dc0ad843ac88b90376867ea123</string>
+    <string name="subscription_apiroot">API root is Needed. E.g. https://westcentralus.api.cognitive.microsoft.com/vision/v1.0"</string>
 </resources>
