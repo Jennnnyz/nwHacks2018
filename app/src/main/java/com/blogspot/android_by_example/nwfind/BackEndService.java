@@ -24,13 +24,20 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+import android.util.JsonReader;
+
+import org.json.JSONObject;
 
 /**
  * Created by Jeffrey on 2018-01-13.
@@ -39,6 +46,7 @@ import java.net.URL;
 public class BackEndService extends Service {
 
     private Handler handler;
+    private int msgtype = 0;
     public static Runnable runnable = null;
     @Nullable
     @Override
@@ -52,6 +60,51 @@ public class BackEndService extends Service {
 
 
     }
+
+    BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("Received Message");
+            //condition variable which decides on the type of intent to send back based on the message received from the activity
+            try {
+                String message = "alarm-1 notify 0";
+                if (intent.hasExtra("HostBegin")) {
+                    message = intent.getStringExtra("HostBegin");
+                    msgtype = 3;
+                } else {
+                    if (intent.hasExtra("HostPending")) {
+                        message = intent.getStringExtra("HostPending");
+                        msgtype = 0;
+                    } else {
+                        if (intent.hasExtra("Leaderboard")) {
+                            message = intent.getStringExtra("Leaderboard");
+                            msgtype = 2;
+                        } else {
+                            if (intent.hasExtra("PlayerLogin")) {
+                                message = intent.getStringExtra("PlayerLogin");
+                                msgtype = 4;
+                            } else {
+                                if (intent.hasExtra("WaitingForPlayers")) {
+                                    message = intent.getStringExtra("WaitingForPlayers");
+                                    msgtype = 5;
+                                } else {
+                                    if (intent.hasExtra("update")) {
+                                        message = intent.getStringExtra("update");
+                                        msgtype = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                System.out.println("Section" + message);
+                new LongOperation().execute();
+
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    };
 
 
     //Destroys service
@@ -80,8 +133,35 @@ public class BackEndService extends Service {
 
         @Override
         protected String doInBackground(String... params) {
-
+            String msg = "";
             try {
+
+                switch (msgtype)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        msg = sendGET(msgtype);
+                        break;
+                    case 2:
+                        msg = sendGET(msgtype);
+                        break;
+                    case 3:
+                        msg = sendGET(msgtype);
+                        break;
+                    case 4:
+                        msg = sendPOST(msgtype);
+                        break;
+                    case 5:
+                        msg = sendPOST(msgtype);
+                        break;
+                    case 6:
+                        msg = sendPOST(msgtype);
+                        break;
+                    default:
+                        break;
+                }
+
 
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -89,7 +169,7 @@ public class BackEndService extends Service {
             return "Executed";
         }
 
-        private void sendGET() throws IOException {
+        private String sendGET(int msg) throws IOException {
             URL obj = new URL(GET_URL);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
@@ -108,14 +188,14 @@ public class BackEndService extends Service {
                 in.close();
 
                 // print result
-                System.out.println(response.toString());
+                return response.toString();
             } else {
-                System.out.println("GET request not worked");
+                return "GET request not worked";
             }
 
         }
 
-        private void sendPOST() throws IOException {
+        private String sendPOST(int msg) throws IOException {
             URL obj = new URL(POST_URL);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
@@ -144,11 +224,33 @@ public class BackEndService extends Service {
                 in.close();
 
                 // print result
-                System.out.println(response.toString());
+                return response.toString();
             } else {
-                System.out.println("POST request not worked");
+                return "POST request not worked";
             }
         }
 
+    }
+
+    //sends message to weather
+    private void sendMessageListUsers(String id, String val) {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent("HostPending");
+        intent.putExtra(id, val);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+    //sends message to weather temperature
+    private void sendMessageItemList(String id, String val) {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent("ItemList");
+        intent.putExtra(id, val);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+    //sends message to weather humidity
+    private void sendMessageHumidListFound(String id, String val) {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent("ItemDone");
+        intent.putExtra(id, val);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
