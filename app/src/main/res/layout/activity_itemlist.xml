@@ -24,11 +24,11 @@
         android:id="@+id/Camera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="I found an item!" />
 
     <Button
         android:id="@+id/Leaderboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Who is winning?" />
 </LinearLayout>

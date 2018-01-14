@@ -5,6 +5,12 @@
     android:weightSum="1">
 
     <TextView
+        android:id="@+id/WaitingPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Waiting for players..." />
+
+    <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +34,7 @@
         android:id="@+id/users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.99"
+        android:layout_weight="0.93"
         android:textSize="18sp" />
 
     <Button

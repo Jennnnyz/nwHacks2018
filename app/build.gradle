@@ -5,11 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.blogspot.android_by_example.nwfind"
-<<<<<<< HEAD
         minSdkVersion 21
-=======
-        minSdkVersion 16
->>>>>>> 83018b7bf812aaf0677fa15ea0af3a0a68b65cc2
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"

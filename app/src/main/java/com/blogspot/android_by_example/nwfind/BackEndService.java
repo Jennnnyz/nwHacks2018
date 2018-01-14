@@ -125,7 +125,7 @@ public class BackEndService extends Service {
 
         private static final String USER_AGENT = "Mozilla/5.0";
 
-        private static final String GET_URL = "http://localhost:9090/SpringMVCExample";
+        private static final String GET_URL = "https://2018nwhacks.azurewebsites.net/games/0/users";
 
         private static final String POST_URL = "https://2018nwhacks.azurewebsites.net/games";
 

@@ -3,7 +3,9 @@ package com.blogspot.android_by_example.nwfind;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -52,11 +54,46 @@ public class ItemList extends AppCompatActivity implements View.OnClickListener 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_itemlist);
 
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("ItemList"));
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("ItemDone"));
+
+            Button mCameraButton = (Button) findViewById(R.id.Camera);
+            mCameraButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //setContentView(R.layout.activity_host);
+                    Intent HostBegin = new Intent(ItemList.this, UseCamera.class);
+                    startActivity(HostBegin);
+                }
+            });
+
+            Button mLeaderButton = (Button) findViewById(R.id.Leaderboard);
+            mLeaderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setContentView(R.layout.activity_leaderboard);
+                    Intent HostBegin = new Intent(ItemList.this, Leaderboard.class);
+                    startActivity(HostBegin);
+                }
+            });
+
+
 
         }
 
         public void onClick(View view) {
 
+            switch(view.getId()) {
+                case R.id.player_button:
+                    Intent PlayerLogin = new Intent(ItemList.this, UseCamera.class);
+                    startActivity(PlayerLogin);
+
+                case R.id.host_button:
+                Intent HostBegin = new Intent(this, Leaderboard.class);
+                startActivity(HostBegin);
+            }
         }
 
 
