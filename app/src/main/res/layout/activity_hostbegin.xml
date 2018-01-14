@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="178dp"
+        android:layout_height="wrap_content"
+        android:text="Select Items:"
+        android:textSize="30sp" />
+
+    <CheckBox
+        android:id="@+id/can"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pop Can" />
+
+    <CheckBox
+        android:id="@+id/fastfood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fastfood" />
+
+    <CheckBox
+        android:id="@+id/rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rectangle" />
+
+    <CheckBox
+        android:id="@+id/shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shape" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.96" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Begin" />
+
+</LinearLayout>
