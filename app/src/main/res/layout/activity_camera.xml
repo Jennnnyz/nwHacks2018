@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,10 +22,3 @@
         android:layout_marginTop="16dp"
         android:text="take_picture" />
 </RelativeLayout>
-=======
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</LinearLayout>
->>>>>>> 83018b7bf812aaf0677fa15ea0af3a0a68b65cc2
