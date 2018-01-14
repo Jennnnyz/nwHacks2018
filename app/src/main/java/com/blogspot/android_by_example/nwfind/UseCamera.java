@@ -153,7 +153,7 @@ public class UseCamera extends AppCompatActivity {
         AnalysisResult v = this.client.analyzeImage(inputStream, features, details);
 
         return v;
-    }7
+    }
 
     private String getCategory(){
         try {
