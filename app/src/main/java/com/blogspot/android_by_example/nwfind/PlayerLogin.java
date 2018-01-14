@@ -38,9 +38,9 @@ public class PlayerLogin extends AppCompatActivity implements View.OnClickListen
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //setContentView(R.layout.activity_host);
-                //Intent HostBegin = new Intent(StartActivity.this, HostBegin.class);
-               //startActivity(HostBegin);
+                setContentView(R.layout.activity_itemlist);
+                Intent HostBegin = new Intent(PlayerLogin.this, ItemList.class);
+               startActivity(HostBegin);
             }
        });
 
@@ -51,8 +51,11 @@ public class PlayerLogin extends AppCompatActivity implements View.OnClickListen
 
     public void onClick(View view)
     {
-        String toSend = UserPassKey.getText().toString();
-        sendMessage("PlayerLogin", toSend );
+        //String toSend = UserPassKey.getText().toString();
+        //sendMessage("PlayerLogin", toSend );
+
+        Intent PlayerLogin = new Intent(this, ItemList.class);
+        startActivity(PlayerLogin);
 
 
 
