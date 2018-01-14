@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/nwFind.iml" filepath="$PROJECT_DIR$/nwFind.iml" />
+=======
+>>>>>>> a6ae16959290b232ea98191ced65eaf7491bed30
       <module fileurl="file://$PROJECT_DIR$/nwHacks2018.iml" filepath="$PROJECT_DIR$/nwHacks2018.iml" />
     </modules>
   </component>

@@ -3,6 +3,7 @@ package com.blogspot.android_by_example.nwfind;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -32,6 +33,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -73,6 +76,14 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.microsoft.projectoxford.vision.VisionServiceClient;
+import com.microsoft.projectoxford.vision.VisionServiceRestClient;
+import com.microsoft.projectoxford.vision.contract.AnalysisResult;
+import com.microsoft.projectoxford.vision.contract.Category;
+import com.microsoft.projectoxford.vision.rest.VisionServiceException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -105,10 +116,19 @@ public class UseCamera extends AppCompatActivity {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    private VisionServiceClient client;
+    private byte[] imageArray;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        if (client==null){
+            client = new VisionServiceRestClient(getString(R.string.subscription_key), getString(R.string.subscription_apiroot));
+        }
+
         textureView = (TextureView) findViewById(R.id.texture);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
@@ -121,6 +141,44 @@ public class UseCamera extends AppCompatActivity {
             }
         });
     }
+
+    private AnalysisResult process() throws VisionServiceException, IOException {
+        Gson gson = new Gson();
+        String[] features = {"Categories"};
+        String[] details = {};
+
+        // Put the image into an input stream for detection.
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageArray);
+
+        AnalysisResult v = this.client.analyzeImage(inputStream, features, details);
+
+        return v;
+    }7
+
+    private String getCategory(){
+        try {
+            AnalysisResult v = process();
+            List<Category> categories = v.categories;
+            int size = categories.size();
+            if(size > 0){
+                Category max = categories.get(0);
+                for(Category c : categories){
+                    if(c.score > max.score){
+                        max = c;
+                    }
+                }
+
+                return max.name;
+            }else{
+                return "";
+            }
+        }catch (Exception e){
+
+        }
+
+        return "";
+    }
+
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -216,9 +274,9 @@ public class UseCamera extends AppCompatActivity {
                     try {
                         image = reader.acquireLatestImage();
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                        byte[] bytes = new byte[buffer.capacity()];
-                        buffer.get(bytes);
-                        save(bytes);
+                        imageArray = new byte[buffer.capacity()];
+                        buffer.get(imageArray);
+                        save(imageArray);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
